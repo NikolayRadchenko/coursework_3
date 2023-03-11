@@ -1,6 +1,6 @@
 from typing import Optional
 
-from project.dao import UsersDAO
+from project.dao.users_dao import UsersDAO
 from project.tools.security import generate_password_hash
 from project.exceptions import ItemNotFound
 from project.models import User
