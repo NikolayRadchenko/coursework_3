@@ -1,5 +1,5 @@
 from project.dao.base import BaseDAO
-from project.models import Genre, Director, Movie
+from project.models import Genre, Director
 
 
 class GenresDAO(BaseDAO[Genre]):
@@ -8,7 +8,3 @@ class GenresDAO(BaseDAO[Genre]):
 
 class DirectorsDAO(BaseDAO[Director]):
     __model__ = Director
-
-
-class MoviesDAO(BaseDAO[Movie]):
-    __model__ = Movie

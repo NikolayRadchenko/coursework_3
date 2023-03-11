@@ -13,30 +13,35 @@ class Genre(models.Base):
 class Director(models.Base):
     __tablename__ = 'directors'
 
-    name = Column(String(100), unique=True, nullable=False)
+    name = Column(String(100), nullable=False)
 
 
 class Movie(models.Base):
     __tablename__ = 'movies'
 
-    id = Column(Integer(), primary_key=True, unique=True, nullable=False)
-    title = Column(String(255))
-    description = Column(String(255))
-    trailer = Column(String(255))
-    year = Column(Integer())
-    rating = Column(Float())
-    genre_id = Column(Integer(), ForeignKey('genres.id'))
+    title = Column(String(255), nullable=False)
+    description = Column(String(255), nullable=False)
+    trailer = Column(String(255), nullable=False)
+    year = Column(Integer(), nullable=False)
+    rating = Column(Float(), nullable=False)
+    genre_id = Column(Integer(), ForeignKey('genres.id'), nullable=False)
     genre = relationship('Genre')
-    director_id = Column(Integer(), ForeignKey('directors.id'))
+    director_id = Column(Integer(), ForeignKey('directors.id'), nullable=False)
     director = relationship('Director')
 
 
 class User(models.Base):
     __tablename__ = 'users'
 
-    id = Column(Integer(), primary_key=True, unique=True, nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     name = Column(String(100))
     surname = Column(String(100))
     favorite_genre = Column(String(100))
+
+
+class FavoriteMovies(models.Base):
+    __tablename__ = 'favorite_movies'
+
+    user_id = Column(ForeignKey(User.id))
+    movie_id = Column(ForeignKey(Movie.id))
