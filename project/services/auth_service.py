@@ -1,5 +1,5 @@
-from calendar import calendar
-from datetime import datetime
+import calendar
+import datetime
 
 import jwt
 from flask_restx import abort
@@ -40,7 +40,7 @@ class AuthService:
 
     def approve_refresh_token(self, refresh_token):
         data = jwt.decode(jwt=refresh_token, key=current_app.config["SECRET_KEY"],
-                          algorithm=current_app.config["JWT_ALGORITHM"])
+                          algorithms=current_app.config["JWT_ALGORITHM"])
 
         if 'email' not in data:
             raise Exception()

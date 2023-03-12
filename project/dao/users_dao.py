@@ -2,12 +2,18 @@ from sqlalchemy.exc import IntegrityError
 from project.exceptions import UserAlreadyExists
 from project.tools.security import generate_password_hash
 
-from project.dao.base import BaseDAO
 from project.models import User, FavoriteMovies, Movie
 
 
-class UsersDAO(BaseDAO[User]):
-    __model__ = User
+class UsersDAO:
+    def __init__(self, session):
+        self.session = session
+
+    def get_one(self, uid):
+        return self.session.query(User).get(uid)
+
+    def get_all(self):
+        return self.session.query(User).all()
 
     def get_by_email(self, email):
         return self.session.query(User).filter(User.email == email).first()
@@ -49,7 +55,7 @@ class UsersDAO(BaseDAO[User]):
         user.password = generate_password_hash(new_password)
 
         self.session.add(user)
-        self.sission.commit()
+        self.session.commit()
 
     def get_favorites(self, user_id):
         result = self.session.query(Movie).join(FavoriteMovies).filter(FavoriteMovies.user_id == user_id).all()
