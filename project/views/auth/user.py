@@ -8,14 +8,14 @@ from project.tools.security import get_email_from_token
 api = Namespace('user')
 
 
-@api.route('/<int:user_id>/')
+@api.route('/user')
 class AuthView(Resource):
     @api.expect(user)
     @api.response(201, description='OK')
-    def get(self, user_id: int):
+    def get(self):
         """
         Страница пользователя
         """
-        # email = get_email_from_token(request.headers)
-        return user_service.get_by_id(user_id)
+        email = get_email_from_token(request.headers)
+        return user_service.get_by_email(email)
 

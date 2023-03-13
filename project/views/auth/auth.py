@@ -7,7 +7,7 @@ from project.setup.api.models import auth, auth_result
 api = Namespace('auth')
 
 
-@api.route('/register')
+@api.route('/register/')
 class AuthView(Resource):
     @api.expect(auth)
     @api.response(201, description='OK')
@@ -19,7 +19,7 @@ class AuthView(Resource):
         return "OK", 201
 
 
-@api.route('/login')
+@api.route('/login/')
 class AuthView(Resource):
     @api.expect(auth)
     @api.marshal_with(auth_result, code=200)
