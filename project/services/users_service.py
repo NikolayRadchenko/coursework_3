@@ -10,11 +10,6 @@ class UsersService:
     def __init__(self, dao: UsersDAO) -> None:
         self.dao = dao
 
-    def get_by_id(self, uid: int) -> User:
-        if user := self.dao.get_by_id(uid):
-            return user
-        raise ItemNotFound(f'User with id={uid} not exists.')
-
     def get_by_email(self, email):
         return self.dao.get_by_email(email)
 
@@ -40,3 +35,10 @@ class UsersService:
         favorites = self.dao.get_favorites(user.id)
         return favorites
 
+    def create_favorite(self, email, movie_id):
+        user = self.get_by_email(email)
+        self.dao.create_favorite(user.id, movie_id)
+
+    def delete_favorite(self, email, movie_id):
+        user = self.get_by_email(email)
+        self.dao.delete_favorite(user.id, movie_id)

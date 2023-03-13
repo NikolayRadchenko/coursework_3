@@ -60,3 +60,14 @@ class UsersDAO:
     def get_favorites(self, user_id):
         result = self.session.query(Movie).join(FavoriteMovies).filter(FavoriteMovies.user_id == user_id).all()
         return result
+
+    def create_favorite(self, user_id, movie_id):
+        movie = self.session.query(FavoriteMovies).join(Movie).filter(Movie.id == movie_id).first()
+        self.session.add(movie)
+        self.session.commit()
+
+    def delete_favorite(self, user_id, movie_id):
+        movie = self.session.query(Movie).join(FavoriteMovies).filter(FavoriteMovies.movie_id == movie_id)\
+            .filter(FavoriteMovies.user_id == user_id).first()
+        self.session.delete(movie)
+        self.session.commit()
