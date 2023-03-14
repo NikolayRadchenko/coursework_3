@@ -31,8 +31,8 @@ user: Model = api.model('Пользователь', {
     'email': fields.String(required=True, example='email@email.com'),
     'password': fields.String(required=True, example='password'),
     'name': fields.String(example='name'),
-    'surname': fields.String(example='surname имя'),
-    'favorite_genre': fields.String(example='favorite_genre жанр'),
+    'surname': fields.String(example='surname'),
+    'favorite_genre': fields.String(example='favorite_genre'),
     'genre': fields.Nested(genre)
 })
 
@@ -46,3 +46,10 @@ auth_result: Model = api.model('', {
     'refresh_token': fields.String(required=True),
 })
 
+favorite_movie: Model = api.model('Избранное', {
+    'id': fields.Integer(required=True, example=1),
+    'user_id': fields.Integer(required=True, example=1),
+    'user': fields.Nested(user),
+    'movie_id': fields.Integer(required=True, example=1),
+    'movie': fields.Nested(movie),
+})

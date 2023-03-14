@@ -4,7 +4,7 @@ import hmac
 from typing import Union
 
 import jwt
-from flask import current_app
+from flask import current_app, request, abort
 
 
 def __generate_password_digest(password: str) -> bytes:
@@ -36,3 +36,29 @@ def get_email_from_token(data):
     email = data['email']
     return email
 
+
+def auth_required(func):
+    def wrapper(*args, **kwargs):
+        if 'Authorization' not in request.headers:
+            abort(401)
+        data = request.headers['Authorization']
+        token = data.split('Bearer')[-1].strip()
+
+        try:
+            jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=current_app.config['JWT_ALGORITHM'])
+        except Exception as e:
+            print('JWT Decode exception', e)
+            abort(401)
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
+def login_required(func):
+    def wrapper(*args, **kwargs):
+        if 'Authorization' not in request.headers:
+            abort(401)
+
+            return func(*args, **kwargs)
+
+    return wrapper

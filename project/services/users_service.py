@@ -37,7 +37,8 @@ class UsersService:
 
     def create_favorite(self, email, movie_id):
         user = self.get_by_email(email)
-        self.dao.create_favorite(user.id, movie_id)
+        favorite_movie_data = dict[user.id, movie_id]
+        self.dao.create_favorite(favorite_movie_data)
 
     def delete_favorite(self, email, movie_id):
         user = self.get_by_email(email)

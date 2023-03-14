@@ -2,7 +2,7 @@ from flask import request
 from flask_restx import Namespace, Resource
 
 from project.container import user_service
-from project.setup.api.models import movie
+from project.setup.api.models import favorite_movie, movie
 from project.tools.security import get_email_from_token
 
 api = Namespace('favorites')
@@ -30,7 +30,6 @@ class FavoriteMovieView(Resource):
         user_service.create_favorite(email, movie_id)
         return "", 201
 
-    @api.marshal_with(movie, as_list=True, code=200, description='OK')
     def delete(self, movie_id):
         """
         Delete favorite movie.

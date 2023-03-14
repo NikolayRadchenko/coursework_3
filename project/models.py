@@ -37,7 +37,7 @@ class User(models.Base):
     password = Column(String(255), nullable=False)
     name = Column(String(100))
     surname = Column(String(100))
-    favorite_genre = Column(String(100))
+    favorite_genres = Column(String(100))
 
 
 class FavoriteMovies(models.Base):
