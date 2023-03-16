@@ -21,7 +21,7 @@ class AuthView(Resource):
         return user_service.get_by_email(email)
 
     @login_required
-    def pacth(self):
+    def patch(self):
         """
         Изменение информации о пользователе
         """
