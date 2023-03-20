@@ -20,7 +20,7 @@ class AuthView(Resource):
         email = get_email_from_token(request.headers)
         return user_service.get_by_email(email)
 
-    @login_required
+    @auth_required
     def patch(self):
         """
         Изменение информации о пользователе
@@ -31,7 +31,7 @@ class AuthView(Resource):
 
 @api.route('/password/')
 class AuthView(Resource):
-    @login_required
+    @auth_required
     def put(self):
         """
         Изменение пароля пользователя
